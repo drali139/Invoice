@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title color="success">Invoice Generator</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="ion-padding">
+    <div class="button-container">
+      <ion-button color="success" shape="outline" (click)="openModal()">
+        Click Me For Invoice
+      </ion-button>
+      <!-- <ion-button color="success" shape="outline" routerLink="/invoice-page">
+        Click Me For Invoice Design 
+      </ion-button> -->
+    </div>
+    
+    <app-invoice 
+      [isOpen]="isModalOpen" 
+      (closeModal)="handleModalClose()"
+    ></app-invoice>
+  </ion-content>

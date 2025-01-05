@@ -1,0 +1,39 @@
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .logo-preview {
+    border: 1px solid #ccc;
+    padding: 4px;
+    border-radius: 4px;
+    
+    img {
+      width: 35px;
+      height: 35px;
+      object-fit: contain;
+    }
+  }
+  
+  ion-item-group {
+    margin: 1rem 0;
+  }
+
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  
+    ion-button {
+      --padding-start: 4px;
+      --padding-end: 4px;
+    }
+  
+    ion-input {
+      text-align: center;
+      max-width: 80px;
+      margin: 0 8px;
+    }
+  }

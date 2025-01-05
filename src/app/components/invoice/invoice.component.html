@@ -1,0 +1,122 @@
+<ion-modal [isOpen]="isOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Generate Invoice</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="close()">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="ion-padding">
+      <form [formGroup]="invoiceForm">
+        
+        <div class="logo-container">
+          <ion-button (click)="uploadLogo()" size="small">
+            <ion-icon name="image-outline"></ion-icon>
+            Upload Logo
+          </ion-button>
+          @if (logoUrl()) {
+            <div class="logo-preview">
+              <img [src]="logoUrl()" alt="Logo">
+            </div>
+          }
+        </div>
+
+        <ion-item-group>
+          <ion-item-divider>
+            <ion-label>Customer Details</ion-label>
+          </ion-item-divider>
+          <ion-item>
+            <ion-label position="floating">Name</ion-label>
+            <ion-input formControlName="customerName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Address</ion-label>
+            <ion-textarea formControlName="customerAddress"></ion-textarea>
+          </ion-item>
+        </ion-item-group>
+
+        <ion-item-group formArrayName="orderItems">
+          <ion-item-divider>
+            <ion-label>Order Details</ion-label>
+            <ion-button slot="end" size="small" (click)="addOrderItem()">
+              <ion-icon name="add"></ion-icon>
+            </ion-button>
+          </ion-item-divider>
+          @for(item of orderItems.controls; track item; let i = $index) {
+            <div [formGroupName]="i">
+              <ion-item>
+                <ion-label position="floating">Product</ion-label>
+                <ion-input formControlName="product"></ion-input>
+                @if (item.get('product')?.hasError('pattern')) {
+                  <ion-note color="danger">Only letters allowed</ion-note>
+                }
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Price</ion-label>
+                <ion-input type="number" formControlName="price" (ionFocus)="clearInput($event)" (ionChange)="calculateTotal()"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Quantity</ion-label>
+                <div class="quantity-controls">
+                  <ion-button fill="clear" (click)="decrementQuantity(i)">
+                    <ion-icon name="remove-circle-outline"></ion-icon>
+                  </ion-button>
+                  <ion-input type="number" formControlName="quantity" readonly></ion-input>
+                  <ion-button fill="clear" (click)="incrementQuantity(i)">
+                    <ion-icon name="add-circle-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </ion-item>
+              <ion-item>
+                <ion-label>Amount</ion-label>
+                <ion-note slot="end">{{ calculateItemTotal(item.value) }}</ion-note>
+              </ion-item>
+            </div>
+          }
+        </ion-item-group>
+
+        <ion-item>
+          <ion-label>Discount</ion-label>
+          <ion-select formControlName="discount" (ionChange)="calculateTotal()">
+            <ion-select-option value="0">0%</ion-select-option>
+            <ion-select-option value="5">5%</ion-select-option>
+            <ion-select-option value="10">10%</ion-select-option>
+            <ion-select-option value="15">15%</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Payment Method</ion-label>
+          <ion-select formControlName="paymentMethod">
+            <ion-select-option value="card">Card</ion-select-option>
+            <ion-select-option value="cash">Cash</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Total Amount</ion-label>
+          <ion-note slot="end">{{ totalAmount() }}</ion-note>
+        </ion-item>
+
+        <div class="ion-padding">
+          @if (!isPdfGenerated()) {
+            <ion-button expand="block" (click)="preparePDF()" [disabled]="!invoiceForm.valid">
+              Click Me for Pdf
+            </ion-button>
+          }
+          @if (isPdfGenerated()) {
+            <ion-button expand="block" (click)="viewPDF()" class="ion-margin-bottom">
+              View PDF
+            </ion-button>
+            <ion-button expand="block" (click)="downloadPDF()">
+              Download PDF
+            </ion-button>
+          }
+        </div>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>

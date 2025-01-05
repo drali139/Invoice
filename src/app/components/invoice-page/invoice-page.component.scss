@@ -1,0 +1,229 @@
+.invoice-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-bottom: 80px;
+    background: #ffffff;
+  }
+  
+  .section-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 16px 0;
+    padding: 20px;
+  
+    // Remove shadow when printing
+    @media print {
+      box-shadow: none;
+      margin: 8px 0;
+      padding: 16px;
+    }
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 20px;
+  
+    .upload-btn {
+      --background: #f4f5f8;
+      --color: #3880ff;
+    }
+  }
+  
+  .logo-preview {
+    border: 1px solid #e0e0e0;
+    padding: 8px;
+    border-radius: 8px;
+    background: #f8f9fa;
+    max-width: 200px;
+    
+    img {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  
+    h2 {
+      margin: 0;
+      color: #1f1f1f;
+      font-size: 1.2rem;
+    }
+  }
+  
+  .customer-section, 
+  .order-section, 
+  .summary-section {
+    h2 {
+      color: #1f1f1f;
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+    }
+  }
+  
+  .order-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    background: #f8f9fa;
+  
+    .price-quantity-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0;
+    }
+  
+    .amount-item {
+      --background: transparent;
+    }
+  }
+  
+  .total-amount {
+    margin-top: 16px;
+    --background: #f0f7ff;
+    border-radius: 8px;
+  
+    .total-value {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #3880ff;
+    }
+  }
+  
+  // Print-specific styles
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+  
+    .print-only {
+      display: block !important;
+    }
+  
+    ion-item {
+      --background: transparent;
+      --border-color: transparent;
+      
+      &::part(native) {
+        background: transparent;
+        padding-left: 0;
+      }
+    }
+  
+    ion-input, ion-textarea, ion-select {
+      --background: transparent;
+      --border-color: transparent;
+      --padding-start: 0;
+      
+      &::part(native) {
+        background: transparent;
+        border: none;
+        padding-left: 0;
+      }
+    }
+  
+    .section-card {
+      page-break-inside: avoid;
+    }
+  
+    .order-item {
+      border: 1px solid #e0e0e0;
+      background: transparent;
+      page-break-inside: avoid;
+    }
+  }
+  
+  // Hide print-only elements by default
+  .print-only {
+    display: none;
+  }
+  
+  // Styles when generating PDF
+  .printing {
+    .no-print {
+      display: none !important;
+    }
+  
+    .print-only {
+      display: block !important;
+    }
+  
+    ion-item {
+      --background: transparent;
+      --border-color: transparent;
+      
+      &::part(native) {
+        background: transparent;
+      }
+    }
+  
+    ion-input, ion-textarea, ion-select {
+      --background: transparent;
+      --border-color: transparent;
+    }
+  
+    .section-card {
+      box-shadow: none;
+    }
+  }
+  
+  // Responsive Design
+  @media (max-width: 576px) {
+    .section-card {
+      padding: 16px;
+      margin: 12px 0;
+    }
+  
+    .price-quantity-group {
+      grid-template-columns: 1fr !important;
+      gap: 8px !important;
+    }
+  
+    .logo-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .section-header {
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+  }
+  
+  // Additional utility classes
+  .mb-0 {
+    margin-bottom: 0 !important;
+  }
+  
+  .mt-0 {
+    margin-top: 0 !important;
+  }
+  
+  .text-right {
+    text-align: right !important;
+  }
+  
+  .text-center {
+    text-align: center !important;
+  }
+  
+  .font-bold {
+    font-weight: bold !important;
+  }
+  
+  .text-primary {
+    color: #3880ff !important;
+  }
